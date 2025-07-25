@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cart - VintageVibe Vinyls</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      padding-top: 190px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .top-bar {
+      background: #000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: white;
+      top: 40px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 5px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      margin: 0 40px;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #999;
+      font-size: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px 10px 40px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .right-icons {
+      display: flex;
+      gap: 15px;
+      font-size: 18px;
+    }
+
+    .right-icons a {
+      text-decoration: none;
+      color: black;
+    }
+
+       .user-profile {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-profile .avatar {
+      width: 32px;
+      height: 32px;
+      background: #8e24aa;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .user-info {
+      margin-left: 10px;
+      display: none;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1005;
+      padding: 10px 0;
+    }
+
+    .user-profile:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .dropdown a:hover {
+      background: #f5f5f5;
+    }
+
+    .dropdown a i {
+      margin-right: 10px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .dropdown .get-plan {
+      background: #007bff;
+      color: white;
+      margin: 10px;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      display: block;
+    }
+
+    .dropdown .get-plan:hover {
+      background: #0056b3;
+    }
+
+    .dropdown .has-submenu {
+      position: relative;
+    }
+    .submenu {
+      display: none;
+      position: relative; 
+      top: auto;          
+      left: auto;        
+      background: white;
+      border: none;      
+      box-shadow: none;   
+      padding-left: 20px; 
+      margin-top: 5px;   
+      min-width: auto;    
+    }
+
+    .has-submenu:hover > .submenu {
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-weight: 500;
+      background: white;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      padding: 5px 0;
+      position: relative;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background-color: black;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .quantity-btn {
+      cursor: pointer;
+      padding: 6px 12px;
+      border: 1px solid #d1d5db;
+      background: white;
+      border-radius: 4px;
+      min-width: 32px;
+      text-align: center;
+    }
+
+    #cart-items-container > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    #cart-items-container img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      body {
+        padding-top: 160px;
+      }
+      .navbar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px;
+      }
+      .search-box {
+        margin: 0;
+        flex-basis: 100%;
+      }
+      .nav-links {
+        gap: 15px;
+      }
+      main > div.grid {
+        display: block;
+      }
+      main > div.grid > div {
+        margin-bottom: 30px;
+      }
+      #cart-items-container > div {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      #cart-items-container img {
+        margin-bottom: 8px;
+      }
+      .quantity-btn {
+        padding: 6px 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 24px;
+      }
+      .logo span {
+        font-size: 12px;
+        letter-spacing: 3px;
+      }
+      .quantity-btn {
+        padding: 5px 8px;
+        font-size: 14px;
+      }
+      #cart-items-container img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="sticky-header">
+  <div class="top-bar">
+    <div>Call Us: +941234567891</div>
+    <div>Email: <a href="#">records@VintageVibe.lk</a></div>
+  </div>
+
+  <div class="navbar">
+    <div class="logo">VintageVibe<br /><span>Vinyls</span></div>
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search Store" />
+    </div>
+    <div class="right-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+     <div class="user-profile" id="userProfile" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User menu" onclick="toggleDropdown(event)" onkeydown="handleKeyDown(event)">
+        <div class="avatar">S</div>
+        <div class="user-info">user18792352<br />wimalarathnasammani@gmail.com</div>
+        <div class="dropdown" id="userDropdown">
+          <a href="#" class="get-plan">Get a plan</a>
+          
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-users"></i> Add members 
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Subio team members</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+              <a href="#">Got a plan</a>
+              <a href="#">Aşnaler</a>
+              <a href="#">Senior</a>
+              <a href="#">Cant</a>
+              <a href="#">Gmbus</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-coins"></i> Credit usage<br /><span>Spent 0</span><span>Limit 0</span></a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-user-shield"></i> Subscription <span style="margin-left: auto;">Anonymous</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Anonymous</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-user"></i> Account</a>
+          <a href="#"><i class="fas fa-download"></i> Downloads</a>
+          <a href="#"><i class="fas fa-users"></i> Join community</a>
+          <a href="#"><i class="fab fa-discord"></i> Join Discord server</a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-globe"></i> Language <span style="margin-left:auto;">English</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">English</a>
+              <a href="#">Spanish</a>
+              <a href="#">French</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-question-circle"></i> Help center</a>
+          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="vinylStore.html">HOME</a>
+    <a href="vinyls.html" class="active">VINYL RECORDS</a>
+    <a href="#">CONTACT US</a>
+    <a href="#">ABOUT US</a>
+    <a href="#">REGISTER</a>
+  </div>
+</header>
+
+<main class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
+  <h1 class="text-3xl font-bold mb-6">Cart</h1>
+
+  <div class="grid grid-cols-2 gap-6 md:grid-cols-1">
+    <div>
+      <h2 class="text-xl font-bold mb-4">Cart Summary</h2>
+      <div id="cart-items-container" class="space-y-6 min-h-[150px]"></div>
+      <div class="mt-4">
+        <input type="text" id="coupon-code" placeholder="Coupon code" class="border p-2 w-1/2 md:w-full" />
+        <button id="apply-coupon" class="bg-gray-200 text-gray-700 py-2 px-4 rounded ml-2 mt-2 md:ml-0 md:mt-2 w-auto md:w-full">Apply Coupon</button>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-bold mb-4">Cart totals</h2>
+      <table class="w-full">
+        <tbody>
+          <tr><td class="py-2">Subtotal</td><td class="py-2 text-right" id="subtotal">LKR 0.00</td></tr>
+          <tr>
+            <td class="py-2">Shipping</td>
+            <td class="py-2 text-right">
+              <label><input type="radio" name="shipping" value="flat" checked> Flat Rate: LKR 350.00</label><br>
+              <label><input type="radio" name="shipping" value="pickup"> Store Pickup</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-2">Shipping to</td>
+            <td class="py-2 text-right">Colombo. <a href="#" class="text-blue-600">Change address</a></td>
+          </tr>
+          <tr>
+            <td class="py-2 font-bold">Total</td>
+            <td class="py-2 text-right font-bold" id="total">LKR 0.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <button id="checkout-btn" class="bg-black text-white py-2 px-6 rounded mt-4 w-full hover:bg-gray-800 disabled:bg-gray-400" disabled>
+        Proceed To Checkout
+      </button>
+    </div>
+  </div>
+</main>
+
+<script>
+  function loadCart() {
+    const cartContainer = document.getElementById('cart-items-container');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalEl = document.getElementById('total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Save which checkboxes were checked
+    const checkedIndexes = new Set();
+    document.querySelectorAll('.item-checkbox').forEach(cb => {
+      if (cb.checked) {
+        checkedIndexes.add(parseInt(cb.getAttribute('data-index')));
+      }
+    });
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = '<p class="text-center text-gray-600">Your cart is empty.</p>';
+      subtotalEl.textContent = 'LKR 0.00';
+      totalEl.textContent = 'LKR 0.00';
+      checkoutBtn.disabled = true;
+      return;
+    }
+
+    cartContainer.innerHTML = '';
+    cart.forEach((item, index) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.innerHTML = `
+        <div class="flex items-center gap-4">
+          <input type="checkbox" class="item-checkbox" data-index="${index}" ${checkedIndexes.has(index) ? 'checked' : ''} />
+          <img src="${item.image}" alt="${item.title}" />
+          <div>
+            <h3 class="font-semibold">${item.title}</h3>
+            <p>LKR ${item.price.toFixed(2)}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="quantity-btn" data-index="${index}" data-action="decrease">-</button>
+          <span>${item.quantity}</span>
+          <button class="quantity-btn" data-index="${index}" data-action="increase">+</button>
+          <button class="text-red-600 ml-4" data-index="${index}" data-action="remove"><i class="fas fa-trash"></i></button>
+        </div>
+      `;
+      cartContainer.appendChild(itemDiv);
+    });
+
+    cartContainer.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        const idx = parseInt(button.getAttribute('data-index'));
+        const action = button.getAttribute('data-action');
+
+        if (action === 'increase') cart[idx].quantity += 1;
+        if (action === 'decrease' && cart[idx].quantity > 1) cart[idx].quantity -= 1;
+        if (action === 'remove') cart.splice(idx, 1);
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+      });
+    });
+
+    document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+      radio.addEventListener('change', updateTotalFromSelected);
+    });
+
+    document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', updateTotalFromSelected);
+    });
+
+    updateTotalFromSelected();
+  }
+
+  function updateTotalFromSelected() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    let subtotal = 0;
+
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        const idx = parseInt(cb.getAttribute('data-index'));
+        subtotal += cart[idx].price * cart[idx].quantity;
+      }
+    });
+
+    const shipping = document.querySelector('input[name="shipping"]:checked').value === 'flat' ? 350.00 : 0.00;
+    const total = subtotal + shipping;
+
+    document.getElementById('subtotal').textContent = `LKR ${subtotal.toFixed(2)}`;
+    document.getElementById('total').textContent = `LKR ${total.toFixed(2)}`;
+    document.getElementById('checkout-btn').disabled = subtotal === 0;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCart();
+
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const checkboxes = document.querySelectorAll('.item-checkbox');
+      const selectedItems = [];
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          const idx = parseInt(cb.getAttribute('data-index'));
+          selectedItems.push(cart[idx]);
+        }
+      });
+
+      if (selectedItems.length === 0) {
+        alert('Please select at least one item.');
+        return;
+      }
+
+      localStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
+      window.location.href = 'cartcheckout.html';
+    });
+  });
+</script>
+
+
+<script>
+  function toggleDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.querySelector('.dropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+
+  document.addEventListener('click', function (event) {
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+      if (!dropdown.parentElement.contains(event.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+  });
+
+</script>
+
+<!-- Footer -->
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">VintageVibe Vinyls</h3>
+          <p>65/9 Kirula Road, Colombo 05</p>
+          <p>Phone: +94 112368958</p>
+          <p>Email: records@VintageVibe.lk</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-gray-300">Home</a></li>
+            <li><a href="vinyls.html" class="hover:text-gray-300">Vinyl Records</a></li>
+            <li><a href="contactus.html" class="hover:text-gray-300">Contact Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">About Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+          <p class="mb-2">Subscribe for updates</p>
+          <form class="flex gap-2">
+            <input type="email" placeholder="Enter your email" class="p-2 rounded border border-gray-600 bg-gray-700 text-white flex-1" required />
+            <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 p-2 rounded">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-8 border-t border-gray-700 pt-4">
+        <p class="text-sm">© 2025 VintageVibe Vinyls. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
