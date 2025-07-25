@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - VintageVibe</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url("bg/signup.jpg") no-repeat center center/cover;
+    }
+    .container {
+      display: flex;
+      width: 95vw;
+      height: 95vh;
+      max-height: 900px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .background-image {
+      flex: 1;
+      background: url("bg/signup.jpg") no-repeat center center/cover;
+      position: relative;
+    }
+    .background-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .signup-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .signup-section h1 {
+      color: #e74c3c;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    .signup-section p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 15px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .form-group button:hover {
+      background: #f5f5f5;
+    }
+    .form-group button img {
+      width: 20px;
+    }
+    .form-group input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .submit-btn {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      background: #00aaff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .submit-btn:hover {
+      background: #0099e6;
+    }
+    .login-link, .cookies-link {
+      margin-top: 20px;
+      color: #e74c3c;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .login-link:hover, .cookies-link:hover {
+      text-decoration: underline;
+    }
+    .terms-text {
+      font-size: 0.8em;
+      color: #666;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .form-group-news{
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="background-image"></div>
+    <div class="signup-section">
+      <h1>VintageVibe</h1>
+      <p>Create an account</p>
+      <div class="form-group">
+        <button>
+          <img src="https://www.google.com/favicon.ico" alt="Google Icon" />
+          Continue as Sammani wimalarathnasammani@gmail.com
+        </button>
+      </div>
+      <div class="form-group">
+        <button>
+          <img src="https://www.apple.com/favicon.ico" alt="Apple Icon" />
+          Continue with Apple
+        </button>
+      </div>
+      <div class="form-group">
+        <button>
+          <i class="fas fa-envelope"></i>
+          Continue with email
+        </button>
+      </div>
+      <div class="form-group-news">
+        <label>
+          <input type="checkbox" name="news" /> I do not wish to receive news and promotions from Freepik by email.
+        </label>
+      </div>
+      <button class="submit-btn">Sign Up</button>
+      <p class="terms-text">By continuing, you agree to Freepik Terms of Use and Privacy Policy.</p>
+      <a href="login.html" class="login-link">Already have an account? Log in</a>
+      <a href="#" class="cookies-link">Cookies Settings</a>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('.submit-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+       window.location.href = 'vinylStore.html';
+    });
+
+    document.querySelector('.login-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'login.html';
+    });
+
+    document.querySelector('.cookies-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Cookies settings would be implemented here.');
+    });
+
+    // Add click events for social login buttons (demo)
+    document.querySelectorAll('.form-group button').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert(`Continuing with ${button.textContent.trim()} (This is a demo.)`);
+      });
+    });
+  </script>
+  
+</body>
+</html>
