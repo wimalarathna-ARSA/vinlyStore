@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VintageVibe Vinyls - Vinyl Vault</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      padding-top: 190px;
+      min-height: 100vh;
+      position: relative;
+      z-index: 0;
+    }
+
+    #background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .top-bar {
+      background: #000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: white;
+      position: sticky;
+      top: 40px;
+      z-index: 1000;
+      border-bottom: 1px solid #eee;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 5px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      margin: 0 40px;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #999;
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px 10px 40px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .right-icons {
+      display: flex;
+      gap: 15px;
+      font-size: 18px;
+    }
+
+    .right-icons a {
+      text-decoration: none;
+      color: black;
+    }
+
+       .user-profile {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-profile .avatar {
+      width: 32px;
+      height: 32px;
+      background: #8e24aa;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .user-info {
+      margin-left: 10px;
+      display: none;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1005;
+      padding: 10px 0;
+    }
+
+    .user-profile:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .dropdown a:hover {
+      background: #f5f5f5;
+    }
+
+    .dropdown a i {
+      margin-right: 10px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .dropdown .get-plan {
+      background: #007bff;
+      color: white;
+      margin: 10px;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      display: block;
+    }
+
+    .dropdown .get-plan:hover {
+      background: #0056b3;
+    }
+
+    .dropdown .has-submenu {
+      position: relative;
+    }
+    .submenu {
+      display: none;
+      position: relative; 
+      top: auto;          
+      left: auto;        
+      background: white;
+      border: none;      
+      box-shadow: none;   
+      padding-left: 20px; 
+      margin-top: 5px;   
+      min-width: auto;    
+    }
+
+    .has-submenu:hover > .submenu {
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-weight: 500;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      padding: 5px 0;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background-color: black;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .btn {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .vinyl-image {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vinyl-image:hover {
+      transform: scale(1.05);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans flex flex-col">
+
+  <!-- Background Container -->
+  <div id="background-container"></div>
+
+  <!-- Header -->
+  <header class="sticky-header">
+    <div class="top-bar">
+      <div>Call Us: +941234567891</div>
+      <div>Email:<a href="">records@VintageVibe.lk</a></div>
+    </div>
+    <div class="navbar">
+      <div class="logo">
+        VintageVibe<br /><span>Vinyls</span>
+      </div>
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search Store" />
+      </div>
+      <div class="right-icons">
+       <a href="cart.html" title="Cart" class="relative">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count" class="absolute -top-2 -right-3 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+        </a>
+
+        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <div class="user-profile" id="userProfile" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User menu" onclick="toggleDropdown(event)" onkeydown="handleKeyDown(event)">
+        <div class="avatar">S</div>
+        <div class="user-info">user18792352<br />wimalarathnasammani@gmail.com</div>
+        <div class="dropdown" id="userDropdown">
+          <a href="#" class="get-plan">Get a plan</a>
+          
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-users"></i> Add members 
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Subio team members</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+              <a href="#">Got a plan</a>
+              <a href="#">Aşnaler</a>
+              <a href="#">Senior</a>
+              <a href="#">Cant</a>
+              <a href="#">Gmbus</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-coins"></i> Credit usage<br /><span>Spent 0</span><span>Limit 0</span></a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-user-shield"></i> Subscription <span style="margin-left: auto;">Anonymous</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Anonymous</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-user"></i> Account</a>
+          <a href="#"><i class="fas fa-download"></i> Downloads</a>
+          <a href="#"><i class="fas fa-users"></i> Join community</a>
+          <a href="#"><i class="fab fa-discord"></i> Join Discord server</a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-globe"></i> Language <span style="margin-left:auto;">English</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">English</a>
+              <a href="#">Spanish</a>
+              <a href="#">French</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-question-circle"></i> Help center</a>
+          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="vinylStore.html">HOME</a>
+      <a href="vinyls.html" class="active">VINYL RECORDS</a>
+       <a href="contactus.html" >CONTACT US</a>
+       <a href="aboutus.html">ABOUT US</a>
+       <a href="signup.html">REGISTER</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white bg-opacity-80 rounded-xl">
+    <section class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <article class="flex-1 flex items-center justify-center">
+        <img id="image" src="" alt="Vinyl Image" class="vinyl-image w-full max-w-[400px] lg:max-w-[500px] h-auto rounded-xl object-contain fade-in" />
+      </article>
+      <article class="flex-1 flex flex-col justify-center">
+        <h1 id="title" class="text-3xl sm:text-4xl font-bold text-black mb-3 fade-in">Loading...</h1>
+        <h2 id="subtitle" class="text-lg sm:text-xl italic text-gray-800 mb-6 fade-in"></h2>
+        <p id="price" class="text-2xl sm:text-3xl font-semibold text-green-700 mb-4 fade-in"></p>
+        <p id="stock" class="text-base sm:text-lg text-gray-700 mb-6 fade-in"></p>
+        <aside class="p-6 rounded-xl mb-6 fade-in  bg-opacity-90">
+          <h3 class="text-lg font-semibold text-gray-700 mb-3">Delivery Information</h3>
+          <ul class="text-gray-700 text-sm sm:text-base leading-relaxed space-y-2">
+            <li><strong>Colombo 1 to 15:</strong> Within 2 working days</li>
+            <li><strong>Colombo Suburbs:</strong> Within 3 working days</li>
+            <li><strong>Other Areas:</strong> Within 5 working days</li>
+            <li><strong>Store Pickup:</strong> Mon-Fri, 9:00 AM - 5:00 PM</li>
+          </ul>
+        </aside>
+        <section class="flex flex-col sm:flex-row gap-4">
+          <button id="addToCartBtn" class="btn bg-red-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-red-700 text-sm sm:text-base">Add to Cart</button>
+          <button id="buyNowBtn" class="btn bg-green-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-green-700 text-sm sm:text-base">Buy Now</button>
+        </section>
+      </article>
+    </section>
+  </main>
+
+ 
+<!-- Scripts -->
+<script>
+  // Background image rotation
+  const backgroundImages = [
+    'url("bg/01.jpg")',
+    'url("bg/02.jpg")',
+    'url("bg/03.jpg")',
+    'url("bg/04.jpg")',
+    'url("bg/05.jpg")'
+  ];
+
+  let index = 0;
+  const bgContainer = document.getElementById('background-container');
+
+  function rotateBackground() {
+    bgContainer.style.opacity = 0;
+    setTimeout(() => {
+      bgContainer.style.backgroundImage = backgroundImages[index];
+      bgContainer.style.opacity = 1;
+      index = (index + 1) % backgroundImages.length;
+    }, 1000);
+  }
+
+  rotateBackground();
+  setInterval(rotateBackground, 10000);
+
+  // Get URL query parameters
+  const getQueryParams = () => {
+    const params = {};
+    const query = window.location.search.substring(1);
+    query.split('&').forEach(pair => {
+      const [key, value] = pair.split('=');
+      if (key) params[key] = decodeURIComponent(value || '');
+    });
+    return params;
+  };
+
+  // Get element references
+  const elements = {
+    title: document.getElementById('title'),
+    subtitle: document.getElementById('subtitle'),
+    image: document.getElementById('image'),
+    price: document.getElementById('price'),
+    stock: document.getElementById('stock'),
+    addToCartBtn: document.getElementById('addToCartBtn'),
+    buyNowBtn: document.getElementById('buyNowBtn'),
+    cartCount: document.getElementById('cart-count') 
+  };
+
+  // Read product details from URL
+  const params = getQueryParams();
+  if (params.title && params.image && params.price) {
+    elements.title.textContent = params.title;
+    elements.subtitle.textContent = params.subtitle || 'No subtitle available';
+    elements.image.src = params.image;
+    elements.image.alt = params.title;
+    elements.price.textContent = `LKR ${parseFloat(params.price).toFixed(2)}`;
+    elements.stock.textContent = `In Stock: ${Math.floor(Math.random() * 50) + 1} units`;
+  } else {
+    elements.title.textContent = 'Invalid Vinyl Details';
+    elements.subtitle.textContent = 'Please select a valid product.';
+    elements.image.classList.add('hidden');
+    elements.price.classList.add('hidden');
+    elements.stock.classList.add('hidden');
+    elements.addToCartBtn.classList.add('hidden');
+    elements.buyNowBtn.classList.add('hidden');
+  }
+
+  // Setup cart count with localStorage
+  let cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
+  if (elements.cartCount) {
+    elements.cartCount.textContent = cartCount;
+  }
+
+  // Handle Add to Cart
+elements.addToCartBtn.addEventListener('click', () => {
+  // Get existing cart from localStorage or empty array
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  // Check if product already exists in cart
+  const existingIndex = cart.findIndex(item => item.title === params.title);
+
+  if (existingIndex !== -1) {
+    // If exists, increase quantity
+    cart[existingIndex].quantity += 1;
+  } else {
+    // Else add new product with quantity 1
+    cart.push({
+      title: params.title,
+      image: params.image,
+      price: parseFloat(params.price),
+      quantity: 1
+    });
+  }
+
+  // Save cart back to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // Update cartCount (total quantity)
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  localStorage.setItem('cartCount', totalQuantity);
+
+  if (elements.cartCount) {
+    elements.cartCount.textContent = totalQuantity;
+  }
+
+  alert(`Added "${params.title || 'item'}" to cart.`);
+});
+
+
+  // Handle Buy Now
+ elements.buyNowBtn.addEventListener('click', () => {
+  const product = {
+    title: params.title,
+    image: params.image,
+    price: params.price
+  };
+  localStorage.setItem('checkoutProduct', JSON.stringify(product));
+  window.location.href = 'checkout.html';
+});
+
+</script>
+
+<script>
+  const searchInput = document.querySelector('.search-box input');
+  searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      const query = searchInput.value.trim();
+      if (query.length > 0) {
+        window.location.href = `vinylStore.html?search=${encodeURIComponent(query)}`;
+      }
+    }
+  });
+</script>
+
+<!-- Footer -->
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">VintageVibe Vinyls</h3>
+          <p>65/9 Kirula Road, Colombo 05</p>
+          <p>Phone: +94 112368958</p>
+          <p>Email: records@VintageVibe.lk</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-gray-300">Home</a></li>
+            <li><a href="vinyls.html" class="hover:text-gray-300">Vinyl Records</a></li>
+            <li><a href="contactus.html" class="hover:text-gray-300">Contact Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">About Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+          <p class="mb-2">Subscribe for updates</p>
+          <form class="flex gap-2">
+            <input type="email" placeholder="Enter your email" class="p-2 rounded border border-gray-600 bg-gray-700 text-white flex-1" required />
+            <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 p-2 rounded">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-8 border-t border-gray-700 pt-4">
+        <p class="text-sm">© 2025 VintageVibe Vinyls. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
