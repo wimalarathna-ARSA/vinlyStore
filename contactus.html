@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - VintageVibe Vinyls</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+     * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      padding-top: 190px;
+    }
+     .sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      
+    }
+
+    .top-bar {
+      background: #000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: white;
+      position: sticky;
+      top: 40px; /* after top-bar */
+      z-index: 1001;
+      border-bottom: 1px solid #eee;
+    }
+
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 5px;
+    }
+
+    .search-box {
+    position: relative;
+    flex: 1;
+    margin: 0 40px;
+  }
+
+  .search-box i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 16px;
+    pointer-events: none; /* let clicks go through */
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px; /* extra left padding for icon */
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  
+    .right-icons {
+      display: flex;
+      gap: 15px;
+      font-size: 18px;
+    }
+
+    .right-icons a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .user-profile {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-profile .avatar {
+      width: 32px;
+      height: 32px;
+      background: #8e24aa;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .user-info {
+      margin-left: 10px;
+      display: none;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1005;
+      padding: 10px 0;
+    }
+
+    .user-profile:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .dropdown a:hover {
+      background: #f5f5f5;
+    }
+
+    .dropdown a i {
+      margin-right: 10px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .dropdown .get-plan {
+      background: #007bff;
+      color: white;
+      margin: 10px;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      display: block;
+    }
+
+    .dropdown .get-plan:hover {
+      background: #0056b3;
+    }
+
+    .dropdown .has-submenu {
+      position: relative;
+    }
+    .submenu {
+      display: none;
+      position: relative; 
+      top: auto;          
+      left: auto;        
+      background: white;
+      border: none;      
+      box-shadow: none;   
+      padding-left: 20px; 
+      margin-top: 5px;   
+      min-width: auto;    
+    }
+
+    .has-submenu:hover > .submenu {
+      display: block;
+    }
+
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-weight: 500;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      padding: 5px 0;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background-color: black;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .contact-container {
+      display: flex;
+      width: 80%;
+      max-width: 1200px;
+      margin: 40px auto;
+      gap: 40px;
+    }
+
+    .contact-info {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .contact-info h2 {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 1em;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .whatsapp-icon {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 2em;
+      color: #25D366;
+    }
+
+    .contact-form {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .contact-form h2 {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .contact-form .form-group {
+      margin-bottom: 15px;
+    }
+
+    .contact-form .form-group label {
+      display: block;
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .contact-form .form-group input,
+    .contact-form .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .contact-form .form-group input:focus,
+    .contact-form .form-group textarea:focus {
+      outline: none;
+      border-color: #999;
+    }
+
+    .contact-form .required::after {
+      content: " *";
+      color: #dc3545;
+    }
+
+    .send-btn {
+      width: 100%;
+      padding: 12px;
+      background: #f4a261;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .send-btn:hover {
+      background: #e07a5f;
+    }
+
+   
+  </style>
+</head>
+<body>
+ <header class="sticky-header">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>Call Us: +941234567891</div>
+    <div>
+      Email:<a href="">records@vintagevibe.lk</a>
+     
+    </div>
+  </div>
+
+  <!-- Main Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      VintageVibe  <br /><span>Vinyls</span>
+    </div>
+
+   <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search Store" onkeyup="filterVinyls()" />
+   </div>
+
+
+    <div class="right-icons">
+      <a href="cart.html" title="Cart" class="relative">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count" class="absolute -top-2 -right-3 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+      </a>
+
+      <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <div class="user-profile" id="userProfile" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User menu" onclick="toggleDropdown(event)" onkeydown="handleKeyDown(event)">
+        <div class="avatar">S</div>
+        <div class="user-info">user18792352<br />wimalarathnasammani@gmail.com</div>
+        <div class="dropdown" id="userDropdown">
+          <a href="#" class="get-plan">Get a plan</a>
+          
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-users"></i> Add members 
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Subio team members</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+              <a href="#">Got a plan</a>
+              <a href="#">Aşnaler</a>
+              <a href="#">Senior</a>
+              <a href="#">Cant</a>
+              <a href="#">Gmbus</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-coins"></i> Credit usage<br /><span>Spent 0</span><span>Limit 0</span></a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-user-shield"></i> Subscription <span style="margin-left: auto;">Anonymous</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Anonymous</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-user"></i> Account</a>
+          <a href="#"><i class="fas fa-download"></i> Downloads</a>
+          <a href="#"><i class="fas fa-users"></i> Join community</a>
+          <a href="#"><i class="fab fa-discord"></i> Join Discord server</a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-globe"></i> Language <span style="margin-left:auto;">English</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">English</a>
+              <a href="#">Spanish</a>
+              <a href="#">French</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-question-circle"></i> Help center</a>
+          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Navigation Links -->
+  <div class="nav-links">
+    <a href="vinylStore.html">HOME</a>
+    <a href="vinyls.html">VINYL RECORDS</a>
+    <a href="contact.html" class="active">CONTACT US</a>
+    <a href="aboutus.html">ABOUT US</a>
+    <a href="signup.html">REGISTER</a>
+  </div>
+</header>
+  <!-- Embedded Google Map -->
+<div style="width: 100%; padding: 0 10%;">
+  <h2 style="font-size: 1.5em; font-weight: bold; margin: 40px 0 10px;">FIND US ON MAP</h2>
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.52322730502!2d79.8734359!3d6.8441734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bc58ed66b6d%3A0x2c535de3a9efab96!2sKottawa%2C%20Colombo!5e0!3m2!1sen!2slk!4v1719753888821!5m2!1sen!2slk" 
+    width="100%" 
+    height="400" 
+    style="border:0; border-radius: 10px;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+<div class="contact-container">
+  <div class="contact-info" style="position: relative;">
+    <h2>ZEPP RECORDS</h2>
+    <p>Address: 15/16 Kottawa, Colombo</p>
+    <p>Phone: +94 112368958</p>
+    <p>Email: records@VintageVibe.lk</p>
+    <a href="https://wa.me/94112368958" class="whatsapp-icon" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <div class="contact-form">
+    <h2>CONTACT US</h2>
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="name">Name <span class="required"></span></label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email <span class="required"></span></label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
+      <button type="submit" class="send-btn">Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Cart functionality
+  function loadCartCount() {
+    const cartCountEl = document.getElementById('cart-count');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountEl.textContent = count;
+  }
+
+  document.addEventListener('DOMContentLoaded', loadCartCount);
+
+  // Add to cart functionality (if needed on this page)
+  document.querySelectorAll('.vinyl-card button').forEach(button => {
+    button.addEventListener('click', () => {
+      const title = button.previousElementSibling.textContent;
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingItem = cart.find(item => item.title === title);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ title, price: 1000, quantity: 1, image: 'https://via.placeholder.com/120' });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCartCount();
+    });
+  });
+
+  // Dropdown toggle functionality
+  const userProfile = document.getElementById('userProfile');
+  const dropdown = userProfile.querySelector('.dropdown');
+
+  userProfile.addEventListener('click', (e) => {
+    e.preventDefault();
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!userProfile.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+
+  // Toggle submenu on click
+  document.querySelectorAll('.has-submenu').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const submenu = item.querySelector('.submenu');
+      submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+
+  // Form submission handling
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    if (name && email) {
+      alert(`Thank you, ${name}! Your message has been sent. (Demo)\nEmail: ${email}\nMessage: ${message}`);
+      document.getElementById('contactForm').reset();
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  });
+</script>
+
+<!-- Footer -->
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">VintageVibe Vinyls</h3>
+          <p>65/9 Kirula Road, Colombo 05</p>
+          <p>Phone: +94 112368958</p>
+          <p>Email: records@VintageVibe.lk</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-gray-300">Home</a></li>
+            <li><a href="vinyls.html" class="hover:text-gray-300">Vinyl Records</a></li>
+            <li><a href="contactus.html" class="hover:text-gray-300">Contact Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">About Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+          <p class="mb-2">Subscribe for updates</p>
+          <form class="flex gap-2">
+            <input type="email" placeholder="Enter your email" class="p-2 rounded border border-gray-600 bg-gray-700 text-white flex-1" required />
+            <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 p-2 rounded">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-8 border-t border-gray-700 pt-4">
+        <p class="text-sm">© 2025 VintageVibe Vinyls. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
