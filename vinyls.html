@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VintageVibe Vinyls All</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      padding-top: 190px;
+    }
+
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      
+    }
+
+    .top-bar {
+      background: #000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: white;
+      position: sticky;
+      top: 40px; /* after top-bar */
+      z-index: 1000;
+      border-bottom: 1px solid #eee;
+    }
+
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 5px;
+    }
+
+   .search-box {
+      position: relative;
+      flex: 1;
+      margin: 0 40px;
+   }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #999;
+      font-size: 16px;
+      pointer-events: none; /* let clicks go through */
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px 10px 40px; /* extra left padding for icon */
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .right-icons {
+      display: flex;
+      gap: 15px;
+      font-size: 18px;
+    }
+
+    .right-icons a {
+      text-decoration: none;
+      color: black;
+    }
+
+    
+    .user-profile {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-profile .avatar {
+      width: 32px;
+      height: 32px;
+      background: #8e24aa;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .user-info {
+      margin-left: 10px;
+      display: none;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1005;
+      padding: 10px 0;
+    }
+
+    .user-profile:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .dropdown a:hover {
+      background: #f5f5f5;
+    }
+
+    .dropdown a i {
+      margin-right: 10px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .dropdown .get-plan {
+      background: #007bff;
+      color: white;
+      margin: 10px;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      display: block;
+    }
+
+    .dropdown .get-plan:hover {
+      background: #0056b3;
+    }
+
+    .dropdown .has-submenu {
+      position: relative;
+    }
+    .submenu {
+      display: none;
+      position: relative; 
+      top: auto;          
+      left: auto;        
+      background: white;
+      border: none;      
+      box-shadow: none;   
+      padding-left: 20px; 
+      margin-top: 5px;   
+      min-width: auto;    
+    }
+
+    .has-submenu:hover > .submenu {
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-weight: 500;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      padding: 5px 0;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background-color: black;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    
+
+    .styled-heading {
+      font-size: 48px;
+      font-weight: 800;
+      text-align: center;
+      color: #e74c3c; 
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 40px 0 20px;
+      position: relative;
+    }
+
+    .styled-heading::after {
+      content: "";
+      width: 80px;
+      height: 4px;
+      background-color: #e74c3c;
+      display: block;
+      margin: 12px auto 0;
+      border-radius: 2px;
+    }
+
+    .vinyl-grid {
+      display: grid;
+      padding-left: 20px;
+      padding-right: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    .vinyl-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      height: 250px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .vinyl-card img.vinyl {
+      width: 120px;
+      position: absolute;
+      bottom: -20px;
+      right: -10px;
+      transform: rotate(-15deg);
+    }
+    .vinyl-card img.icon {
+      width: 60px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .vinyl-card p {
+      margin-top: 50px;
+      font-weight: bold;
+    }
+    .vinyl-card button {
+      margin-top: 10px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .vinyl-grid {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+
+  </style>
+</head>
+<body>
+<header class="sticky-header">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>Call Us: +941234567891</div>
+    <div>
+      Email: <a href="">records@VintageVibe.lk</a>
+    </div>
+  </div>
+
+  <!-- Main Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      VintageVibe<br /><span>Vinyls</span>
+    </div>
+  <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search Store" />
+  </div>
+
+    <div class="right-icons">
+      <a href="cart.html" title="Cart" class="relative">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count" class="absolute -top-2 -right-3 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+      </a>
+      <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+     <div class="user-profile" id="userProfile" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User menu" onclick="toggleDropdown(event)" onkeydown="handleKeyDown(event)">
+        <div class="avatar">S</div>
+        <div class="user-info">user18792352<br />wimalarathnasammani@gmail.com</div>
+        <div class="dropdown" id="userDropdown">
+          <a href="#" class="get-plan">Get a plan</a>
+          
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-users"></i> Add members 
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Subio team members</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+              <a href="#">Got a plan</a>
+              <a href="#">Aşnaler</a>
+              <a href="#">Senior</a>
+              <a href="#">Cant</a>
+              <a href="#">Gmbus</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-coins"></i> Credit usage<br /><span>Spent 0</span><span>Limit 0</span></a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-user-shield"></i> Subscription <span style="margin-left: auto;">Anonymous</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">Anonymous</a>
+              <a href="#">Credit</a>
+              <a href="#">Subio</a>
+              <a href="#">Cost</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-user"></i> Account</a>
+          <a href="#"><i class="fas fa-download"></i> Downloads</a>
+          <a href="#"><i class="fas fa-users"></i> Join community</a>
+          <a href="#"><i class="fab fa-discord"></i> Join Discord server</a>
+
+          <div class="has-submenu" tabindex="0">
+            <a href="#" style="display:flex; align-items:center; width: 100%;">
+              <i class="fas fa-globe"></i> Language <span style="margin-left:auto;">English</span>
+              <i class="fas fa-caret-right caret" style="margin-left:auto;"></i>
+            </a>
+            <div class="submenu">
+              <a href="#">English</a>
+              <a href="#">Spanish</a>
+              <a href="#">French</a>
+            </div>
+          </div>
+
+          <a href="#"><i class="fas fa-question-circle"></i> Help center</a>
+          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="nav-links">
+    <a href="vinylStore.html" >HOME</a>
+    <a href="vinyls.html" class="active">VINYL RECORDS</a>
+    <a href="contactus.html">CONTACT US</a>
+    <a href="aboutus.html">ABOUT US</a>
+    <a href="signup.html">REGISTER</a>
+  </div>
+</header>
+
+ <h1 class="styled-heading">All Vinyl Collections</h1>
+
+  <div class="vinyl-grid" id="vinylGrid"></div>
+
+ <script>
+  const vinyls = [
+    {
+      title: "ABBA",
+      subtitle: " – ABBA (Half-Speed Remaster)",
+      color: "#1c1c1c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2025/06/ABBA-ABBA-Half-Speed-Remaster.png"
+    },
+    {
+      title: "Ben Howard",
+      subtitle: " – How Are You Feeling?",
+      color: "#fecd1a",
+      textColor: "#333",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG82.png",
+      image: "https://music.innt.me/wp-content/uploads/2024/10/Ben-Howard-ndash-How-Are-You-Feeling-2024-ALBUM-ZIP.jpg"
+    },
+    {
+      title: "Bullet For My Valentine ",
+      subtitle: "– The Poison (Transparent Red Vinyl – 20th Anniversary Edition)",
+      color: "#2ecc71",
+      textColor: "white",
+      icon: "https://m.cdn.sera.to/v3/vinyl-and-merch/10-serato-performance-series-glow-in-the-dark/10-serato-performance-series-glow-in-the-dark-1-lg-2x.webp",
+      image: "https://tse3.mm.bing.net/th/id/OIP.xZl-v-a7T4XOzoxbTeFNDwHaFS?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Creedence Clearwater Revival – Pendulum (Brown Vinyl)",
+      subtitle: "– Pendulum (Brown Vinyl)",
+      color: "#34495e",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://tse4.mm.bing.net/th/id/OIP.syF5SKT2mwouI0Ik3MQdaQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Dashboard Confessional ",
+      subtitle: "– Best Ones Of The Best Ones",
+      color: "#8e44ad",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://tse2.mm.bing.net/th/id/OIP.BO6utIThoyqGHReYy6ZzhQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Dire Straits ",
+      subtitle: "– Brothers In Arms",
+      color: "#2980b9",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG46.png",
+      image: "https://th.bing.com/th/id/R.1167a0c8ebf2547b72fd0bcc7ccd7a2e?rik=XrCa0oJrLiGxeQ&pid=ImgRaw&r=0"
+    },
+    {
+      title: "Don Henley ",
+      subtitle: "– Building The Perfect Beast (40th Anniversary)",
+      color: "#c0392b",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://tse1.mm.bing.net/th/id/OIP.G89f2yAOoPzOUr1QC2t5EAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Elton John ",
+      subtitle: "– Madman Across The Water",
+      color: "#16a085",
+      textColor: "white",
+      icon: "https://coloredvinylrecords.com/pictures/p/penfold-amateurs-and-professionals.png",
+      image: "https://th.bing.com/th/id/OIP.99BqDU-0gUAfnvZn4VhZ8AHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Eric Clapton ",
+      subtitle: "– Unplugged (Enhanced Edition)",
+      color: "#e67e22",
+      textColor: "white",
+      icon: "https://pngfre.com/wp-content/uploads/Vinyl-1-1024x1024.png",
+      image: "https://tse1.mm.bing.net/th/id/OIP.lEWzVMwHIxCu2QZzDXLdoQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Five For Fighting ",
+      subtitle: "– America Town (Ltd Edtn Numbered Translucent Blue Vinyl)",
+      color: "#9b59b6",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG102.png",
+      image: "https://th.bing.com/th/id/OIP.-Rtr6huM5f2mbuV4HsADHwHaG0?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Five For Fighting ",
+      subtitle: "– Battle For Everything (Ltd Edtn Numbered Gold Vinyl)",
+      color: "#e74c3c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://i.ebayimg.com/images/g/1M8AAOSwS4df01D2/s-l500.jpg"
+    },
+    {
+      title: "Fleetwood Mac ",
+      subtitle: "– Rumours",
+      color: "#f1c40f",
+      textColor: "#222",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG82.png",
+      image: "https://velona-records.com/wp-content/uploads/2019/08/Fleetwood-Mac-Rumours-1.jpg"
+    },
+    {
+      title: "George Harrison ",
+      subtitle: "– Living In The Material World (50th Anniversary Deluxe Box Set)",
+      color: "#f39c12",
+      textColor: "#222",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://tse4.mm.bing.net/th/id/OIP.00_rYIIKDiLTsdOfqz75CwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Grateful Dead ",
+      subtitle: "– The Best of the Grateful Dead",
+      color: "#2c3e50",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://tse3.mm.bing.net/th/id/OIP.5nUNeK3UExTb4BgfXyGVygHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Hozier ",
+      subtitle: "– Hozier (10th Anniversary) (Custard Colour Vinyl)",
+      color: "#1abc9c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://tse3.mm.bing.net/th/id/OIP.JpU01Q0b3VJh6lUI8w2QTwHaHX?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Jay-Z / Linkin Park ",
+      subtitle: "– Collision Course",
+      color: "#27ae60",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://tse1.mm.bing.net/th/id/OIP.4M5sF1AxYEbPF9we3cwITwHaGk?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Jazz And Beatles ",
+      subtitle: "– V.A (Coloured Vinyl )",
+      color: "#d35400",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://www.lpmanija.lt/wp-content/uploads/2022/09/va-jazz-and-beatles-1.webp"
+    },
+    {
+      title: "John Lennon ",
+      subtitle: "– Plastic Ono Band",
+      color: "#7f8c8d",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG102.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/02/JOHN-LENNON-%E2%80%93-PLASTIC-ONO-BAND-1.jpg"
+    },
+    {
+      title: "Kendrick Lamar ",
+      subtitle: "– Good Kid, M.A.A.D City",
+      color: "#f7dc6f",
+      textColor: "#333",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://th.bing.com/th/id/OIP.Fkg6b0OVvAhNwD_oZbSUCAHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Kenny Wayne Shepherd ",
+      subtitle: "– Trouble Is… 25",
+      color: "#e84393",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://tse2.mm.bing.net/th/id/OIP.x_l_XdvZVx3hUbx6Zio-CAHaGh?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "LCD Soundsystem ",
+      subtitle: " – LCD Soundsystem",
+      color: "#1c1c1c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://is2-ssl.mzstatic.com/image/thumb/Music124/v4/25/c6/b6/25c6b603-9bb0-709b-81ad-7cd953a2a3eb/mzm.flbbiyeh.jpg/1200x1200bf-60.jpg"
+    },
+    {
+      title: "Lewis Capaldi ",
+      subtitle: "– Broken By Desire To Be Heavenly Sent (Pic Disc)",
+      color: "#fecd1a",
+      textColor: "#333",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG82.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/09/Lewis-Capaldi-Broken-By-Desire-To-Be-Heavenly-Sent-Pic-Disc.jpg"
+    },
+    {
+      title: "Lifehouse ",
+      subtitle: "– Lifehouse",
+      color: "#2ecc71",
+      textColor: "white",
+      icon: "https://m.cdn.sera.to/v3/vinyl-and-merch/10-serato-performance-series-glow-in-the-dark/10-serato-performance-series-glow-in-the-dark-1-lg-2x.webp",
+      image: "https://zepprecords.lk/wp-content/uploads/2025/05/Lifehouse-Lifehouse.webp"
+    },
+    {
+      title: "Linkin Park ",
+      subtitle: "– From Zero – Deluxe (Emerald Green Vinyl)",
+      color: "#34495e",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://tse1.mm.bing.net/th/id/OIP.89c8xojPikWOBOkSnGtGSgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Linkin Park",
+      subtitle: " – From Zero (Transparent Petrol Vinyl)",
+      color: "#8e44ad",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://th.bing.com/th/id/OIP.GPltobU7zLGro3TOoSFArwHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "LP",
+      subtitle: " – Lost On You (Limited Edition Gold Vinyl)",
+      color: "#2980b9",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG46.png",
+      image: "https://tse1.mm.bing.net/th/id/OIP.EWeKGwpzWa_Ia0Efr8h8cQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Matchbox Twenty ",
+      subtitle: "– Where The Light Goes",
+      color: "#c0392b",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://th.bing.com/th/id/OIP.JOZZZluJHf_Zvru3AIbDGgHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Meat Loaf ",
+      subtitle: "– Hits Out Of Hell",
+      color: "#16a085",
+      textColor: "white",
+      icon: "https://coloredvinylrecords.com/pictures/p/penfold-amateurs-and-professionals.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/02/MEAT-LOAF-%E2%80%93-HITS-OUT-OF-HELL.jpg"
+    },
+    {
+      title: "Michael Jackson ",
+      subtitle: "– History: Continues (Pic Disc)",
+      color: "#e67e22",
+      textColor: "white",
+      icon: "https://pngfre.com/wp-content/uploads/Vinyl-1-1024x1024.png",
+      image: "https://tse4.mm.bing.net/th/id/OIP.DNSaqzvco1Ojmp3WleV3LQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Motörhead ",
+      subtitle: "– Ace Of Spades (40th Anniversary 3LP Box Set)",
+      color: "#9b59b6",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG102.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/05/zr-11.jpg"
+    },
+    {
+      title: "Myles Kennedy ",
+      subtitle: "– The Art Of Letting Go",
+      color: "#e74c3c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/10/Myles-Kennedy-The-Art-Of-Letting-Go.jpg"
+    },
+    {
+      title: "Beyoncé",
+      subtitle: "Lemonade (Yellow Vinyl)",
+      color: "#f1c40f",
+      textColor: "#222",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG82.png",
+      image: "https://tse4.mm.bing.net/th/id/OIP.oks4--krlvpRMm7jVJkGogHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Oasis ",
+      subtitle: "– Definitely Maybe",
+      color: "#f39c12",
+      textColor: "#222",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://tse2.mm.bing.net/th/id/OIP.GbDguyZuZPDVV6yEupfPfwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Parliament ",
+      subtitle: "– Mothership Connection",
+      color: "#2c3e50",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://th.bing.com/th/id/R.6c68602cdd5b47548ab6584a207c9395?rik=ueTBNpzW34PuJg&pid=ImgRaw&r=0"
+    },
+    {
+      title: "Pink Floyd ",
+      subtitle: "– Pink Floyd At Pompeii – MCML",
+      color: "#1abc9c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://tse1.mm.bing.net/th/id/OIP.YpMfReDkw8WZIoULJIw13gHaFq?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Pink Floyd ",
+      subtitle: "– The Wall",
+      color: "#27ae60",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2025/05/Pink-Floyd-The-Wall.webp"
+    },
+    {
+      title: "Pixies ",
+      subtitle: "– Doolittle",
+      color: "#d35400",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://th.bing.com/th/id/R.ddacda9562a5c40a2984878b8206b517?rik=HSdJtl2ES8KFTQ&pid=ImgRaw&r=0"
+    },
+    {
+      title: "Puddle Of Mudd ",
+      subtitle: "– Famous",
+      color: "#7f8c8d",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG102.png",
+      image: "https://tse3.mm.bing.net/th/id/OIP.Ve5ZNp4UJEU3r060JfEgAgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Queen ",
+      subtitle: "– Greatest Hits",
+      color: "#f7dc6f",
+      textColor: "#333",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://th.bing.com/th/id/OIP.0VfmlsZzk4JFJyL30eQsIwHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Roger Waters ",
+      subtitle: "– The Lockdown Sessions",
+      color: "#e84393",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/02/ROGER-WATERS-THE-LOCKDOWN-SESSIONS.jpg"
+    },
+    {
+      title: "Sade",
+      subtitle: "  – Stronger Than Pride",
+      color: "#1c1c1c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/10/sade.png"
+    },
+    {
+      title: "Sahib Shihab ",
+      subtitle: "– Summer",
+      color: "#fecd1a",
+      textColor: "#333",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG82.png",
+      image: "https://tse3.mm.bing.net/th/id/OIP.0nSrRAwJPjbeUH0Gu0qK0AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Sam Smith ",
+      subtitle: "– Nirvana",
+      color: "#2ecc71",
+      textColor: "white",
+      icon: "https://m.cdn.sera.to/v3/vinyl-and-merch/10-serato-performance-series-glow-in-the-dark/10-serato-performance-series-glow-in-the-dark-1-lg-2x.webp",
+      image: "https://tse4.mm.bing.net/th/id/OIP.6yaEBG_lWd1DAznXl-aAsQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Seal ",
+      subtitle: "– Delux Edition (30th Anniversary 2-LP Edition)",
+      color: "#34495e",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/07/SEAL_Deluxe-scaled-1.jpeg"
+    },
+    {
+      title: "Simple Plan",
+      subtitle: " – No Pads, No Helmets…Just Balls (Limited Edition Clear Vinyl)",
+      color: "#8e44ad",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/02/SIMPLE-PLAN-%E2%80%93-NO-PADS-NO-HELMETS%E2%80%A6JUST-BAL.jpg"
+    },
+    {
+      title: "Staind ",
+      subtitle: "– Confessions Of The Fallen",
+      color: "#2980b9",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG46.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/09/Staind-Confessions-Of-The-Fallen.jpg"
+    },
+    {
+      title: "Star Wars: The Empire Strikes Back ",
+      subtitle: "– Ost – John Williams",
+      color: "#c0392b",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://tse4.mm.bing.net/th/id/OIP.i3o5VmX6ytNywuIDw8QskAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Taylor Swift ",
+      subtitle: "– Evermore (Green Vinyl)",
+      color: "#16a085",
+      textColor: "white",
+      icon: "https://coloredvinylrecords.com/pictures/p/penfold-amateurs-and-professionals.png",
+      image: "https://th.bing.com/th/id/OIP.LOnVLTvhDKDL1TDyhaiDSgHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Taylor Swift",
+      subtitle: " – 1989 (Taylor’s Version)(Tangerine Vinyl)",
+      color: "#e67e22",
+      textColor: "white",
+      icon: "https://pngfre.com/wp-content/uploads/Vinyl-1-1024x1024.png",
+      image: "https://th.bing.com/th/id/OIP.HzYtK6aX1U7zvl6Zg8mqnwHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Taylor Swift ",
+      subtitle: "– The Tortured Poet Department – 2LP Beige “The Bolter”",
+      color: "#9b59b6",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG102.png",
+      image: "https://th.bing.com/th/id/OIP.UJLpq6FurBW_ktpR4n7LpAHaHZ?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Taylor Swift",
+      subtitle: " – The Tortured Poet Department – 2LP Smoke Grey “The Albatross” ",
+      color: "#e74c3c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://tse3.mm.bing.net/th/id/OIP.Nq3kPWdUPbNa5ex4JGyi3wHaHb?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "The Boxer Rebellion ",
+      subtitle: "– Promises (Limited Edition Blue Swirled Vinyl)",
+      color: "#f1c40f",
+      textColor: "#222",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG82.png",
+      image: "https://th.bing.com/th/id/OIP.aj0nZsNNe83L7Gkt1t5gcwHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "The Matrix",
+      subtitle: " – OST (Limited Edition Red Blue Vinyl)",
+      color: "#f39c12",
+      textColor: "#222",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/02/THE-MATRIX2.jpg"
+    },
+    {
+      title: "The Stone Roses ",
+      subtitle: "– Stone Roses",
+      color: "#2c3e50",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://th.bing.com/th/id/R.e66c9fda98382f2cd95f1eda9320dc85?rik=8TFOzi5HWJ%2fUxQ&pid=ImgRaw&r=0"
+    },
+    {
+      title: "The Verve ",
+      subtitle: "– This Is Music: The Singles (Coke Bottle Clear & Transparent Red Coloured Vinyl)",
+      color: "#1abc9c",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://th.bing.com/th/id/OIP.2LjKdPCJ7U7pgMZiL9VmpwAAAA?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "Green Day",
+      subtitle: "American Idiot",
+      color: "#27ae60",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG25.png",
+      image: "https://th.bing.com/th/id/OIP.nLx5WXfNe7YHxCmZgx-c4QHaJL?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      title: "The Who ",
+      subtitle: "– My Generation",
+      color: "#d35400",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG76.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/03/THE-WHO-MY-GENERATION.jpg"
+    },
+    {
+      title: "Thirty Seconds To Mars",
+      subtitle: " – A Beautiful Lie",
+      color: "#7f8c8d",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG102.png",
+      image: "https://th.bing.com/th/id/R.e49da8ae1734a04c498d98b5ede26b25?rik=Ua%2bXnIYQ7bx0DQ&pid=ImgRaw&r=0"
+    },
+    {
+      title: "Tracy Chapman",
+      subtitle: " – Tracy Chapman 35th Anniv.",
+      color: "#f7dc6f",
+      textColor: "#333",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG79.png",
+      image: "https://edition-limitee.fr/images/00000_juju/00_manga_dorohedoro/Tracy-Chapman-edition-vinyle-35-anniversaire-35th-anniversary-collector-colore.jpg"
+    },
+    {
+      title: "UFO ",
+      subtitle: "– Phenomenon [Deluxe Edition]",
+      color: "#e84393",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/09/UFO-Phenomenon-Deluxe-Edition.jpg"
+    },
+    {
+      title: "Uriah Heep ",
+      subtitle: "– Demons And Wizards (Deluxe Edition) ",
+      color: "#e84393",
+      textColor: "white",
+      icon: "https://pngimg.com/uploads/vinyl/vinyl_PNG70.png",
+      image: "https://zepprecords.lk/wp-content/uploads/2024/07/4050538391398.jpg"
+    }
+  ];
+
+  const container = document.getElementById('vinylGrid');
+  vinyls.forEach(vinyl => {
+  const card = document.createElement('div');
+  card.className = 'vinyl-card';
+  card.style.backgroundColor = vinyl.color;
+  card.style.color = vinyl.textColor;
+  card.innerHTML = `
+    <img src="${vinyl.icon}" class="icon" alt="Icon" />
+    <img src="${vinyl.image}" class="vinyl" alt="Vinyl" />
+    <p>${vinyl.title}<br><strong>${vinyl.subtitle}</strong></p>
+  `;
+  const btn = document.createElement('button');
+  btn.textContent = 'Buy';
+  btn.style.background = vinyl.textColor;
+  btn.style.color = vinyl.color;
+  btn.addEventListener('click', () => {
+ const url = `details.html?title=${encodeURIComponent(vinyl.title)}&subtitle=${encodeURIComponent(vinyl.subtitle)}&image=${encodeURIComponent(vinyl.image)}&price=${encodeURIComponent((Math.random()*2000 + 3000).toFixed(2))}`;
+  window.location.href = url;
+});
+
+  card.appendChild(btn);
+  container.appendChild(card);
+});
+
+</script>
+
+<script>
+  const searchInput = document.querySelector('.search-box input');
+  const vinylCards = document.querySelectorAll('.vinyl-card');
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+
+    vinylCards.forEach(card => {
+      const title = card.querySelector('p').innerText.toLowerCase();
+      if (title.includes(query)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+
+<script>
+  // Update cart count from localStorage on page load
+  const cartCountElement = document.getElementById('cart-count');
+  const storedCartCount = parseInt(localStorage.getItem('cartCount')) || 0;
+  if (cartCountElement) {
+    cartCountElement.textContent = storedCartCount;
+  }
+</script>
+
+<script>
+  function toggleDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.querySelector('.dropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+
+  document.addEventListener('click', function (event) {
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+      if (!dropdown.parentElement.contains(event.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+  });
+
+</script>
+
+
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">VintageVibe Vinyls</h3>
+          <p>65/9 Kirula Road, Colombo 05</p>
+          <p>Phone: +94 112368958</p>
+          <p>Email: records@VintageVibe.lk</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-gray-300">Home</a></li>
+            <li><a href="vinyls.html" class="hover:text-gray-300">Vinyl Records</a></li>
+            <li><a href="contactus.html" class="hover:text-gray-300">Contact Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">About Us</a></li>
+            <li><a href="#" class="hover:text-gray-300">Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+          <p class="mb-2">Subscribe for updates</p>
+          <form class="flex gap-2">
+            <input type="email" placeholder="Enter your email" class="p-2 rounded border border-gray-600 bg-gray-700 text-white flex-1" required />
+            <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 p-2 rounded">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-8 border-t border-gray-700 pt-4">
+        <p class="text-sm">© 2025 VintageVibe Vinyls. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
